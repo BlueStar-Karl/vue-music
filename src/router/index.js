@@ -8,10 +8,12 @@ import Search from 'components/search/search'
 Vue.use(Router)
 
 export default new Router({
+  //路由默认的激活样式为'router-link-active'，可以修改
+  linkActiveClass: 'router-link-active',
   routes: [
     {
       path: '/',
-      redirect: '/recommend'
+      redirect: '/recommend',   //重定向
     },
     {
       path: '/recommend',
