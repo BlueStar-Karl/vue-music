@@ -5,7 +5,7 @@
       </slot>
     </div>
     <div class="dots">
-      <span class="dot" v-for="(item,index) in dots" :class="{active:currentaPageIndex === index}"></span>
+      <span class="dot" v-for="(item,index) in dots" :class="{active:currentPageIndex === index}"></span>
     </div>
   </div>
 </template>
@@ -22,20 +22,24 @@
       }
     },
     props: {
+      //是否循环轮播
       loop: {
         type: Boolean,
         dafault: true
       },
+      //是否自动轮播
       autoPlay: {
         type: Boolean,
         default: true
       },
+      //自动轮播间隔
       interval: {
         type: Number,
         default: 4000
       }
     },
     mounted() {
+      //浏览器刷新，通常17ms一次，这里延时器设置为20ms,这算是一个小经验
       setTimeout(() => {
         this._setSliderWidth();
         this._initDots();
@@ -44,37 +48,39 @@
         if(this.autoPlay) {
           this._play()
         }
-      }, 20)
-      //监听页面大小变化，重新给slider赋值宽度,重新计算
+      }, 20);
+      //监听页面大小变化，重新给slider赋值宽度，重新计算
       window.addEventListener('resize', () => {
         if(!this.slider) {
-          return
+          return;
         }
-        this._setSliderWidth(true)
+        this._setSliderWidth(true);
         this.slider.refresh()
       })
     },
     methods: {
+      //设置slider宽度
       _setSliderWidth (isResize) {
-        this.children = this.$refs.sliderGroup.children
-
-        let width = 0
-        let sliderWidth = this.$refs.slider.clientWidth
+        this.children = this.$refs.sliderGroup.children;
+        let width = 0;
+        let sliderWidth = this.$refs.slider.clientWidth;
         for (let i = 0; i < this.children.length; i++) {
-          let child = this.children[i]
-          addClass(child, 'slider-item')
-
-          child.style.width = sliderWidth + 'px'
-          width += sliderWidth
+          let child = this.children[i];
+          addClass(child, 'slider-item');
+          child.style.width = sliderWidth + 'px';
+          width += sliderWidth;
         }
+        //如果循环轮播，前后克隆两个图片，这是轮播导致的
         if (this.loop && !isResize) {
           width += 2 * sliderWidth
         }
         this.$refs.sliderGroup.style.width = width + 'px'
       },
+      //初始化dots
       _initDots() {
-        this.dots = new Array(this.children.length)
+        this.dots = new Array(this.children.length);
       },
+      //初始化slider
       _initSlider () {
         this.slider = new BScroll(this.$refs.slider, {
           scrollX: true,
@@ -83,27 +89,29 @@
           snap: true,
           snapLoop: this.loop,
           snapThreshold: 0.3,
-          snapSpeed: 400
-        })
+          snapSpeed: 400,
+          //click事件可能会与firstClick插件冲突，如果有冲突，注释掉
+          click: true,
+        });
 
         this.slider.on('scrollEnd', () => {
-          let pageIndex = this.slider.getCurrentPage().pageX
+          let pageIndex = this.slider.getCurrentPage().pageX;
           if(this.loop) {
             pageIndex -= 1
           }
-          this.currentPageIndex = pageIndex
+          this.currentPageIndex = pageIndex;
 
-          if(this.loop) {
-            clearTimeout(this.timer)
+          if(this.autoPlay) {
+            clearTimeout(this.timer);
             this._play()
           }
         })
       },
       //自动播放
       _play() {
-        let pageIndex = this.currentPageIndex + 1
+        let pageIndex = this.currentPageIndex + 1;
         if(this.loop) {
-          pageIndex += 1
+          pageIndex += 1;
         }
         this.timer = setTimeout(() => {
           this.slider.goToPage(pageIndex, 0 ,400)
