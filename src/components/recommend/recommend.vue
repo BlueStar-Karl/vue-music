@@ -1,38 +1,51 @@
 <template>
   <div class="recommend" >
-    <div class="recommend-content">
-      <div v-if="recommends.length" class="slider-wrapper" >
-        <silder>
-          <div v-for="item in recommends">
-            <a :href="item.linkUrl">
-              <img :src="item.picUrl" alt="">
-            </a>
-          </div>
-        </silder>
+    <scorll class="recommend-content" :data="discList">
+      <div>
+        <div v-if="recommends.length" class="slider-wrapper" >
+          <silder>
+            <div v-for="item in recommends">
+              <a :href="item.linkUrl">
+                <img :src="item.picUrl" alt="">
+              </a>
+            </div>
+          </silder>
+        </div>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li v-for="(item,index) in discList" class="item">
+              <div class="icon">
+                <img :src="item.imgurl" alt="" width="60" height="60">
+              </div>
+              <div class="text">
+                <h2 class="name" v-html="item.creator.name"></h2>
+                <p class="desc" v-html="item.dissname"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="recommend-list">
-        <h1 class="list-title">热门歌单推荐</h1>
-        <ul>
-
-        </ul>
-      </div>
-    </div>
+    </scorll>
   </div>
 </template>
 
 <script>
   import Silder from 'base/silder/silder'
+  import Scorll from 'base/scroll/scroll'
   import {getRecommend,getDiscList} from 'api/recommend'
   import {ERR_OK} from 'api/config'
 
   export default {
     name: "recommend",
     components: {
-      Silder
+      Silder,
+      Scorll
     },
     data() {
       return {
         recommends: [],
+        discList: [],
       }
     },
     created() {
@@ -51,8 +64,7 @@
       _getDiscList() {
         getDiscList().then((res) => {
           if (res.code === ERR_OK) {
-            console.log(res.data.list)
-            // this.recommends = res.data.slider;
+            this.discList = res.data.list;
           }
         })
       }
