@@ -71,9 +71,9 @@
           width += sliderWidth;
         }
         //如果循环轮播，前后克隆两个图片，这是轮播导致的
-        if (this.loop && !isResize) {
-          width += 2 * sliderWidth
-        }
+        // if (this.loop && !isResize) {
+        //   width += 2 * sliderWidth
+        // }
         this.$refs.sliderGroup.style.width = width + 'px'
       },
       //初始化dots
@@ -96,9 +96,9 @@
 
         this.slider.on('scrollEnd', () => {
           let pageIndex = this.slider.getCurrentPage().pageX;
-          if(this.loop) {
-            pageIndex -= 1
-          }
+          // if(this.loop) {
+          //   pageIndex -= 1
+          // }
           this.currentPageIndex = pageIndex;
 
           if(this.autoPlay) {
@@ -109,9 +109,13 @@
       },
       //自动播放
       _play() {
-        let pageIndex = this.currentPageIndex + 1;
-        if(this.loop) {
-          pageIndex += 1;
+        // let pageIndex = this.currentPageIndex + 1;
+        // if(this.loop) {
+        //   pageIndex += 1;
+        // }
+        let pageIndex = pageIndex = this.currentPageIndex + 1;
+        if(this.currentPageIndex === 4) {
+          pageIndex = 0;
         }
         this.timer = setTimeout(() => {
           this.slider.goToPage(pageIndex, 0 ,400)
