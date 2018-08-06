@@ -6,7 +6,8 @@
           <silder>
             <div v-for="item in recommends">
               <a :href="item.linkUrl">
-                <img :src="item.picUrl" alt="" @load="loadImage">
+                <!-- 设置class类名为needsClick，fastClick不会阻止点击事件 -->
+                <img :src="item.picUrl" alt="" @load="loadImage" class="needsClick">
               </a>
             </div>
           </silder>
@@ -16,7 +17,7 @@
           <ul>
             <li v-for="(item,index) in discList" class="item">
               <div class="icon">
-                <img :src="item.imgurl" alt="" width="60" height="60">
+                <img v-lazy="item.imgurl" alt="" width="60" height="60">
               </div>
               <div class="text">
                 <h2 class="name" v-html="item.creator.name"></h2>

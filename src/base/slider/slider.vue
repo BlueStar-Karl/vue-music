@@ -90,7 +90,7 @@
           snapLoop: this.loop,
           snapThreshold: 0.3,
           snapSpeed: 400,
-          //click事件可能会与firstClick插件冲突，如果有冲突，注释掉
+          //click事件可能会与fastClick插件冲突，如果有冲突，注释掉
           click: true,
         });
 
