@@ -11,7 +11,7 @@ var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
-var axios = require('axios')
+var axios = require('axios');
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -21,9 +21,9 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
 
-var app = express()
+var app = express();
 
-var apiRoutes = express.Router()
+var apiRoutes = express.Router();
 
 apiRoutes.get('/getDiscList', function (req, res) {
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
@@ -38,7 +38,7 @@ apiRoutes.get('/getDiscList', function (req, res) {
   }).catch((e) => {
     console.log(e)
   })
-})
+});
 
 apiRoutes.get('/lyric', function (req, res) {
   var url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
@@ -64,7 +64,7 @@ apiRoutes.get('/lyric', function (req, res) {
   })
 })
 
-app.use('/api', apiRoutes)
+app.use('/api', apiRoutes);
 
 var compiler = webpack(webpackConfig)
 
