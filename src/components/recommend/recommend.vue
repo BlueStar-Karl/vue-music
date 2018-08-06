@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import Silder from 'base/silder/silder'
+  import Silder from 'base/slider/slider'
   import Scorll from 'base/scroll/scroll'
   import {getRecommend,getDiscList} from 'api/recommend'
   import {ERR_OK} from 'api/config'
