@@ -73,7 +73,6 @@
           this.$refs.scroll.refresh()
           this.checkLoaded = true;
         }
-
       }
     }
 
