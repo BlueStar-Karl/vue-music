@@ -27,11 +27,15 @@
           </ul>
         </div>
       </div>
+      <div class="loading-container" v-show="!discList.length">
+        <loading class="loading"></loading>
+      </div>
     </scorll>
   </div>
 </template>
 
 <script>
+  import Loading from 'base/loading/loading'
   import Silder from 'base/slider/slider'
   import Scorll from 'base/scroll/scroll'
   import {getRecommend,getDiscList} from 'api/recommend'
@@ -41,7 +45,8 @@
     name: "recommend",
     components: {
       Silder,
-      Scorll
+      Scorll,
+      Loading
     },
     data() {
       return {
