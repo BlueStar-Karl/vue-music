@@ -85,7 +85,7 @@
         this.slider = new BScroll(this.$refs.slider, {
           scrollX: true,
           scrollY: false,
-          momentum: false,
+          momentum: false,  //是否开启动画，关闭可以提高效率
           snap: true,
           snapLoop: this.loop,
           snapThreshold: 0.3,
